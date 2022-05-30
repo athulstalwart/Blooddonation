@@ -1,0 +1,108 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        body{background: url({% static 'images/123.jpg' %});
+
+    }
+    </style>
+
+
+    <title>Registration for Donation.</title>
+</head>
+<body>
+    <div>
+
+         <h2 class="text-center"><b>Fill the details to complete the Registration.</b></h2>
+            <br><br>
+
+            <form method="post" id="personForm" data-centers-url="{% url 'center' %}">
+                {% csrf_token %}
+                <b>{{ form.as_p }}</b>
+                <input type="submit" value="Submit">
+            </form>
+        <br>
+        <br>
+        <br>
+        <br>
+    </div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script>
+
+
+    $("#id_district").change(function () {
+        const url = $("#personForm").attr("data-centers-url");  // get the url of the `load_cities` view
+        const districtId = $(this).val();  // get the selected country ID from the HTML input
+
+        $.ajax({                       // initialize an AJAX request
+            url: url,                    // set the url of the request (= /persons/ajax/load-cities/ )
+            data: {
+                'district_id': districtId       // add the country id to the GET parameters
+            },
+            success: function (data) {   // `data` is the return of the `load_cities` view function
+                $("#id_center").html(data);  // replace the contents of the city input with the data that came from the server
+
+
+                let html_data = '<option value="">---------</option>';
+                data.forEach(function (center) {
+                    html_data += `<option value="${center.id}">${center.name}</option>`
+                });
+                 console.log(html_data);
+                $("#id_center").html(html_data);
+
+
+            }
+        });
+
+    });
+</script>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
